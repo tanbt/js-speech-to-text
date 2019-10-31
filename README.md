@@ -3,6 +3,8 @@
 ## Run
 `npm start`
 
+Access http://localhost:8080/index.html
+
 ## References
 * https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
 * https://github.com/mdn/web-speech-api
