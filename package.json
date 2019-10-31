@@ -4,6 +4,7 @@
   "description": "Play around with speech recognization",
   "main": "index.js",
   "scripts": {
+    "start": "http-server -c",
     "test": "test"
   },
   "keywords": [
@@ -14,5 +15,8 @@
     "text"
   ],
   "author": "Tan Bui <trungtanbui@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
 }
