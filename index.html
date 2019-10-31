@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
 
-    <title>Speech color changer</title>
+    <title>My speaking practice</title>
 
     <link rel="stylesheet" href="style.css">
     <!--[if lt IE 9]>
@@ -14,11 +14,19 @@
   </head>
 
   <body>
-    <h1>Speech color changer</h1>
+    <h1>My speaking practice</h1>
 
-    <p class="hints"></p>
-    <div>
-        <p class="output"><em>...diagnostic messages</em></p>
+    <div id="controllers">
+      <button id="start">START</button>
+      <button id="stop">STOP</button>
+    </div>
+
+    <div id="logging">
+      <div class="status">Press START then speak...</div>
+      <div class="result">
+        Your speech will be displayed on the left.
+        <div class="confidence">Confidence: score of accuracy (max: 1000)</div>
+      </div>
     </div>
 
     <script src="script.js"></script>

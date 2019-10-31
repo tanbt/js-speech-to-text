@@ -2,48 +2,68 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
 var recognition = new SpeechRecognition();
-recognition.continuous = false;
+recognition.continuous = true;
 recognition.lang = 'en-US';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
-var diagnostic = document.querySelector('.output');
-var bg = document.querySelector('html');
-var hints = document.querySelector('.hints');
+let startBtn = document.querySelector('#start');
+let stopBtn = document.querySelector('#stop');
 
-hints.innerHTML = 'Tap/click then say a color to change the background color of the app';
-
-document.body.onclick = function() {
+startBtn.onclick = function() {
   recognition.start();
-  console.log('Ready to receive a color command.');
+  printStatus("Listening...");
 }
 
+/**
+  The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
+  The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
+  It has a getter so it can be accessed like an array
+  The [last] returns the SpeechRecognitionResult at the last position.
+  Each SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual results.
+  These also have getters so they can be accessed like arrays.
+  The [0] returns the SpeechRecognitionAlternative at position 0.
+  We then return the transcript property of the SpeechRecognitionAlternative object
+ */
 recognition.onresult = function(event) {
-  // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
-  // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
-  // It has a getter so it can be accessed like an array
-  // The [last] returns the SpeechRecognitionResult at the last position.
-  // Each SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual results.
-  // These also have getters so they can be accessed like arrays.
-  // The [0] returns the SpeechRecognitionAlternative at position 0.
-  // We then return the transcript property of the SpeechRecognitionAlternative object
-
-  var last = event.results.length - 1;
-  var color = event.results[last][0].transcript;
-
-  diagnostic.textContent = 'Result received: ' + color + '.';
-  bg.style.backgroundColor = color;
-  console.log('Confidence: ' + event.results[0][0].confidence);
+  const last = event.results.length - 1;
+  const result = event.results[last][0].transcript;
+  const confidence = event.results[0][0].confidence;
+  printResult(result, confidence);
+  printStatus("Listening...");
 }
 
 recognition.onspeechend = function() {
   recognition.stop();
 }
 
-recognition.onnomatch = function(event) {
-  diagnostic.textContent = "I didn't recognise that color.";
+stopBtn.onclick = function() {
+  recognition.stop();
+  isListening = false;
+  printStatus("STOPPED! Press START to begin again.");
 }
 
 recognition.onerror = function(event) {
-  diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
+  printStatus('Error occurred in recognition: ' + event.error);
+}
+
+const loggingArea = document.querySelector('#logging');
+function printStatus(msg) {
+  const divEl = document.createElement("div");
+  divEl.innerText = msg;
+  divEl.setAttribute("class", "status")
+  loggingArea.append(divEl);
+}
+
+function printResult(msg, confidence) {
+  const confDiv = document.createElement("div");
+  confDiv.innerText = "Confidence: " + Math.round(confidence * 1000);
+  confDiv.setAttribute("class", "confidence");
+
+  const resultDiv = document.createElement("div");
+  resultDiv.innerText = msg;
+  resultDiv.setAttribute("class", "result"); 
+  resultDiv.append(confDiv);
+
+  loggingArea.append(resultDiv);
 }
