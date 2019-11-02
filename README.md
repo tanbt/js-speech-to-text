@@ -8,14 +8,21 @@ on Windows `Terminal` (recommended)
 ```
 set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\tanwin\speech-to-text-project-be5bc4f20254.json
 echo %GOOGLE_APPLICATION_CREDENTIALS%
+set DEBUG=record
 node index.js
 ```
-on Windows `GitBash`
-```
-export GOOGLE_APPLICATION_CREDENTIALS=/c/Users/tanwin/speech-to-text-project-be5bc4f20254.json && node index.js
-```
+to see the translated text of `resources/audio.raw` file.
+
+
+
+#### Translate from microphone
+
+Make sure `sox` can record via microphone.
+
+`node microphone.js` then speak.
 
 ## References
+
 * https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
 * https://github.com/mdn/web-speech-api
 
@@ -26,3 +33,9 @@ export GOOGLE_APPLICATION_CREDENTIALS=/c/Users/tanwin/speech-to-text-project-be5
 
 ## Configure Google cloud Speech
 * https://github.com/googleapis/nodejs-speech#using-the-client-library
+
+## Setup SOX
+
+http://sox.sourceforge.net/
+
+Test: `node sox-test.js` then open the file `test.wav` to here the record.
