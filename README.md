@@ -13,13 +13,14 @@ node index.js
 ```
 to see the translated text of `resources/audio.raw` file.
 
-
-
 #### Translate from microphone
 
 Make sure `sox` can record via microphone.
 
 `node microphone.js` then speak.
+
+#### Run endless tream via microphone
+`node infiniteStreaming.js infiniteStream`
 
 ## References
 
